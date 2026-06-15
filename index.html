@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eller Odontologia | Dr. Daniel Lucas Eller | Linhares-ES</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #14532d;
+    --forest-mid: #166534;
+    --forest-bright: #15803d;
+    --forest-light: #dcfce7;
+    --forest-pale: #f0fdf4;
+    --gold: #ca8a04;
+    --gold-light: #fef9c3;
+    --charcoal: #111827;
+    --gray: #6b7280;
+    --white: #ffffff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; color: var(--charcoal); }
+  nav { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(255,255,255,0.97); backdrop-filter: blur(8px); border-bottom: 2px solid var(--forest-light); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .nav-brand { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--forest); font-weight: 600; }
+  .nav-brand span { display: block; font-size: 0.7rem; font-family: 'Inter', sans-serif; color: var(--gray); font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--charcoal); font-size: 0.85rem; font-weight: 500; transition: color .2s; }
+  .nav-links a:hover { color: var(--forest); }
+  .nav-cta { background: var(--forest); color: #fff; padding: .55rem 1.4rem; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: background .2s; }
+  .nav-cta:hover { background: var(--forest-mid); }
+  .hero { position: relative; height: 100vh; min-height: 600px; overflow: hidden; }
+  .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.2s ease; background-size: cover; background-position: center; }
+  .slide.active { opacity: 1; }
+  .slide::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(20,83,45,0.82) 0%, rgba(21,128,61,0.5) 55%, rgba(0,0,0,0.2) 100%); }
+  .slide-1 { background-image: url('https://images.unsplash.com/photo-1629909613654-2b1e0e1e4e4a?w=1600&q=85'); }
+  .slide-2 { background-image: url('https://images.unsplash.com/photo-1606811841689-23dfddce3e66?w=1600&q=85'); }
+  .slide-3 { background-image: url('https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=1600&q=85'); }
+  .hero-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 0 8%; padding-top: 72px; }
+  .hero-tag { display: inline-flex; align-items: center; gap: .4rem; color: #86efac; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1.5rem; width: fit-content; }
+  .hero-tag::before { content: ''; display: block; width: 2rem; height: 1px; background: #86efac; }
+  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 5vw, 3.8rem); color: #fff; line-height: 1.15; font-weight: 700; margin-bottom: 1.2rem; max-width: 600px; }
+  .hero-title em { font-style: italic; color: #86efac; }
+  .hero-sub { color: rgba(255,255,255,0.85); font-size: 1.05rem; line-height: 1.7; max-width: 460px; margin-bottom: 2.5rem; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary { background: var(--forest-bright); color: #fff; padding: .85rem 2rem; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 0.9rem; transition: all .2s; }
+  .btn-primary:hover { background: var(--forest); transform: translateY(-2px); }
+  .btn-gold { background: var(--gold); color: #fff; padding: .85rem 2rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: all .2s; }
+  .btn-gold:hover { background: #a16207; transform: translateY(-2px); }
+  .hero-dots { position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); display: flex; gap: .6rem; z-index: 3; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.35); cursor: pointer; transition: all .3s; }
+  .dot.active { background: #86efac; width: 24px; border-radius: 4px; }
+  .cro-bar { background: var(--forest); display: flex; justify-content: center; align-items: center; gap: 3rem; padding: 1rem 5%; flex-wrap: wrap; }
+  .cro-item { color: rgba(255,255,255,0.8); font-size: 0.8rem; font-weight: 500; display: flex; align-items: center; gap: .5rem; }
+  .cro-item strong { color: #86efac; }
+  .sobre { padding: 6rem 8%; background: var(--white); }
+  .sobre-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; max-width: 1100px; margin: 0 auto; }
+  .sobre-img { position: relative; border-radius: 12px; overflow: hidden; height: 480px; }
+  .sobre-img img { width: 100%; height: 100%; object-fit: cover; }
+  .sobre-label-card { position: absolute; top: 2rem; left: 2rem; background: var(--forest); color: #fff; padding: .6rem 1.2rem; border-radius: 6px; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.04em; }
+  .section-label { color: var(--forest-bright); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.5rem); line-height: 1.2; margin-bottom: 1.5rem; }
+  .sobre-text { color: var(--gray); line-height: 1.8; font-size: 0.95rem; margin-bottom: 1.2rem; }
+  .cro-badge { display: inline-flex; align-items: center; gap: .5rem; background: var(--forest-light); color: var(--forest); padding: .5rem 1.2rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600; margin-top: 1rem; margin-right: .5rem; }
+  .especialidades { padding: 6rem 8%; background: var(--forest-pale); }
+  .especialidades-inner { max-width: 1100px; margin: 0 auto; }
+  .section-header { text-align: center; margin-bottom: 4rem; }
+  .esp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .esp-card { background: #fff; border-radius: 12px; padding: 2rem 1.8rem; border: 1px solid var(--forest-light); transition: all .3s; position: relative; }
+  .esp-card::after { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--forest-bright); border-radius: 12px 0 0 12px; }
+  .esp-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(20,83,45,0.1); }
+  .esp-icon { width: 48px; height: 48px; background: var(--forest-light); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.2rem; font-size: 1.4rem; }
+  .esp-name { font-weight: 700; font-size: 1rem; margin-bottom: .6rem; }
+  .esp-desc { color: var(--gray); font-size: 0.85rem; line-height: 1.6; }
+  .diferenciais { padding: 6rem 8%; background: var(--white); }
+  .diferenciais-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .dif-list { display: flex; flex-direction: column; gap: 1.5rem; }
+  .dif-item { display: flex; gap: 1.2rem; align-items: flex-start; padding: 1.2rem; border-radius: 12px; border: 1px solid var(--forest-light); }
+  .dif-icon { width: 44px; height: 44px; min-width: 44px; background: var(--forest-light); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+  .dif-content h4 { font-weight: 600; margin-bottom: .3rem; font-size: 0.95rem; }
+  .dif-content p { color: var(--gray); font-size: 0.85rem; line-height: 1.6; }
+  .horarios-box { background: var(--forest); border-radius: 16px; padding: 2.5rem; color: #fff; }
+  .horarios-box h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 1.5rem; color: #86efac; }
+  .horario-row { display: flex; justify-content: space-between; padding: .7rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; }
+  .horario-row:last-child { border-bottom: none; }
+  .horario-dia { color: rgba(255,255,255,0.7); }
+  .horario-hora { font-weight: 600; color: #86efac; }
+  .cta { padding: 6rem 8%; background: var(--forest); text-align: center; }
+  .cta h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); color: #fff; margin-bottom: 1rem; }
+  .cta p { color: rgba(255,255,255,0.82); font-size: 1.05rem; max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.7; }
+  .btn-cta-white { background: #fff; color: var(--forest); padding: 1rem 2.5rem; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 0.95rem; display: inline-flex; align-items: center; gap: .5rem; transition: all .2s; }
+  .btn-cta-white:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+  .endereco { padding: 5rem 8%; background: var(--forest-pale); }
+  .endereco-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+  .endereco-info h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 1.5rem; }
+  .info-row { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.2rem; }
+  .info-row .icon { width: 40px; height: 40px; min-width: 40px; background: var(--forest-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+  .info-row p { font-size: 0.9rem; color: var(--gray); line-height: 1.6; }
+  .info-row strong { display: block; color: var(--charcoal); font-weight: 600; margin-bottom: .2rem; }
+  .map-box iframe { width: 100%; height: 260px; border-radius: 12px; border: none; }
+  footer { background: var(--forest); color: rgba(255,255,255,0.5); text-align: center; padding: 2.5rem 5%; font-size: 0.8rem; }
+  footer strong { color: #86efac; }
+  .wa-btn { position: fixed; bottom: 2rem; right: 2rem; z-index: 999; width: 58px; height: 58px; background: #25d366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.4); text-decoration: none; transition: transform .2s; }
+  .wa-btn:hover { transform: scale(1.1); }
+  .wa-btn svg { width: 30px; height: 30px; fill: #fff; }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .sobre-inner, .diferenciais-inner, .endereco-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .esp-grid { grid-template-columns: 1fr 1fr; }
+    .sobre-img { height: 300px; }
+    .cro-bar { gap: 1.5rem; }
+  }
+  @media (max-width: 480px) { .esp-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-brand">Eller Odontologia<span>Dr. Daniel Lucas Eller · Linhares, ES</span></div>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#especialidades">Especialidades</a></li>
+    <li><a href="#diferenciais">Diferenciais</a></li>
+    <li><a href="#endereco">Contato</a></li>
+  </ul>
+  <a href="https://wa.me/5527" target="_blank" class="nav-cta">Agendar Consulta</a>
+</nav>
+<section class="hero">
+  <div class="slide slide-1 active"></div>
+  <div class="slide slide-2"></div>
+  <div class="slide slide-3"></div>
+  <div class="hero-content">
+    <span class="hero-tag">Eller Odontologia · Linhares, ES</span>
+    <h1 class="hero-title">Seu sorriso novo é <em>com a gente!</em></h1>
+    <p class="hero-sub">Odontologia completa com atendimento humanizado, tecnologia e resultados que você vai querer mostrar.</p>
+    <div class="hero-btns">
+      <a href="https://wa.me/5527" target="_blank" class="btn-primary">Agendar pelo WhatsApp</a>
+      <a href="#especialidades" class="btn-gold">Ver Tratamentos</a>
+    </div>
+  </div>
+  <div class="hero-dots">
+    <div class="dot active" onclick="goToSlide(0)"></div>
+    <div class="dot" onclick="goToSlide(1)"></div>
+    <div class="dot" onclick="goToSlide(2)"></div>
+  </div>
+</section>
+<div class="cro-bar">
+  <div class="cro-item">CRO ES <strong>8412</strong></div>
+  <div class="cro-item">EPAO <strong>2265</strong></div>
+  <div class="cro-item">Cirurgião-Dentista <strong>Dr. Daniel Lucas Eller</strong></div>
+  <div class="cro-item">Centro, <strong>Linhares – ES</strong></div>
+</div>
+<section class="sobre" id="sobre">
+  <div class="sobre-inner">
+    <div class="sobre-img">
+      <img src="https://images.unsplash.com/photo-1629909615184-74f495363b67?w=800&q=85" alt="Consultório Eller Odontologia" loading="lazy">
+      <div class="sobre-label-card">Consultório Odontológico · Centro</div>
+    </div>
+    <div class="sobre-texto">
+      <p class="section-label">Conheça o Dr. Daniel</p>
+      <h2 class="section-title">Mais que um tratamento — uma experiência de cuidado</h2>
+      <p class="sobre-text">O Dr. Daniel Lucas Eller atende com dedicação, técnica apurada e olhar clínico individualizado. No consultório localizado no Centro de Linhares, cada paciente é tratado com atenção às suas necessidades e objetivos.</p>
+      <p class="sobre-text">Seja para uma consulta de rotina, uma reabilitação estética ou um tratamento mais complexo, você encontra aqui o que há de melhor em odontologia moderna.</p>
+      <div class="cro-badge">✓ CRO ES 8412</div>
+      <div class="cro-badge">✓ EPAO 2265</div>
+    </div>
+  </div>
+</section>
+<section class="especialidades" id="especialidades">
+  <div class="especialidades-inner">
+    <div class="section-header">
+      <p class="section-label">Tratamentos</p>
+      <h2 class="section-title">Nossos Serviços</h2>
+    </div>
+    <div class="esp-grid">
+      <div class="esp-card"><div class="esp-icon">🦷</div><div class="esp-name">Clínico Geral</div><p class="esp-desc">Consultas de rotina, prevenção, diagnóstico e tratamentos gerais para toda a família.</p></div>
+      <div class="esp-card"><div class="esp-icon">✨</div><div class="esp-name">Estética Dental</div><p class="esp-desc">Transformação do sorriso com procedimentos estéticos modernos e resultados naturais.</p></div>
+      <div class="esp-card"><div class="esp-icon">⚪</div><div class="esp-name">Clareamento Dental</div><p class="esp-desc">Dentes mais brancos e luminosos com técnica de clareamento segura e eficaz.</p></div>
+      <div class="esp-card"><div class="esp-icon">🔩</div><div class="esp-name">Implantes Dentários</div><p class="esp-desc">Recuperação de dentes perdidos com implantes de titânio — solução permanente e confortável.</p></div>
+      <div class="esp-card"><div class="esp-icon">😁</div><div class="esp-name">Próteses Dentárias</div><p class="esp-desc">Reabilitação oral com próteses fixas e removíveis de alta qualidade estética e funcional.</p></div>
+      <div class="esp-card"><div class="esp-icon">🦴</div><div class="esp-name">Tratamento de Canal</div><p class="esp-desc">Procedimento endodôntico com máxima segurança para salvar seu dente natural.</p></div>
+    </div>
+  </div>
+</section>
+<section class="diferenciais" id="diferenciais">
+  <div class="diferenciais-inner">
+    <div>
+      <p class="section-label">Por que nos escolher</p>
+      <h2 class="section-title" style="margin-bottom:2.5rem;">Diferenciais que fazem a diferença</h2>
+      <div class="dif-list">
+        <div class="dif-item"><div class="dif-icon">🎯</div><div class="dif-content"><h4>Diagnóstico Preciso</h4><p>Avaliação completa e individualizada para definir o melhor plano de tratamento para você.</p></div></div>
+        <div class="dif-item"><div class="dif-icon">💚</div><div class="dif-content"><h4>Atendimento Humanizado</h4><p>Você não é um número. Cada paciente recebe atenção personalizada com respeito e cuidado.</p></div></div>
+        <div class="dif-item"><div class="dif-icon">🔬</div><div class="dif-content"><h4>Técnica e Atualização Constante</h4><p>Profissional em constante aperfeiçoamento para oferecer o que há de mais moderno em odontologia.</p></div></div>
+        <div class="dif-item"><div class="dif-icon">📍</div><div class="dif-content"><h4>Localização Central</h4><p>No coração do Centro de Linhares, fácil acesso e estacionamento nas proximidades.</p></div></div>
+      </div>
+    </div>
+    <div class="horarios-box">
+      <h3>Horários de Atendimento</h3>
+      <div class="horario-row"><span class="horario-dia">Segunda-feira</span><span class="horario-hora">08h – 18h</span></div>
+      <div class="horario-row"><span class="horario-dia">Terça-feira</span><span class="horario-hora">08h – 18h</span></div>
+      <div class="horario-row"><span class="horario-dia">Quarta-feira</span><span class="horario-hora">08h – 18h</span></div>
+      <div class="horario-row"><span class="horario-dia">Quinta-feira</span><span class="horario-hora">08h – 18h</span></div>
+      <div class="horario-row"><span class="horario-dia">Sexta-feira</span><span class="horario-hora">08h – 17h</span></div>
+      <div class="horario-row"><span class="horario-dia">Sábado</span><span class="horario-hora">08h – 12h</span></div>
+      <div class="horario-row"><span class="horario-dia">Domingo</span><span class="horario-hora">Fechado</span></div>
+      <a href="https://wa.me/5527" target="_blank" style="display:block;margin-top:1.8rem;background:rgba(134,239,172,0.2);border:1px solid #86efac;color:#86efac;text-align:center;padding:.9rem;border-radius:6px;text-decoration:none;font-weight:700;font-size:.9rem;">Agendar pelo WhatsApp</a>
+    </div>
+  </div>
+</section>
+<section class="cta">
+  <h2>Seu novo sorriso começa aqui</h2>
+  <p>Agende sua avaliação gratuita e descubra como podemos transformar seu sorriso com cuidado e excelência.</p>
+  <a href="https://wa.me/5527" target="_blank" class="btn-cta-white">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="#25d366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.555 4.122 1.528 5.854L.057 23.667a.5.5 0 0 0 .611.612l5.815-1.471A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.9a9.867 9.867 0 0 1-5.03-1.378l-.36-.214-3.733.945.978-3.63-.234-.372A9.867 9.867 0 0 1 2.1 12C2.1 6.533 6.533 2.1 12 2.1c5.467 0 9.9 4.433 9.9 9.9 0 5.467-4.433 9.9-9.9 9.9z"/></svg>
+    Falar pelo WhatsApp
+  </a>
+</section>
+<section class="endereco" id="endereco">
+  <div class="endereco-inner">
+    <div class="endereco-info">
+      <h3>Onde estamos</h3>
+      <div class="info-row"><div class="icon">📍</div><p><strong>Endereço</strong>Av. Rui Barbosa, 601<br>Centro, Linhares — ES</p></div>
+      <div class="info-row"><div class="icon">📱</div><p><strong>WhatsApp</strong>Entre em contato pelo nosso WhatsApp</p></div>
+      <div class="info-row"><div class="icon">🕐</div><p><strong>Horários</strong>Seg–Sex: 08h às 18h<br>Sáb: 08h às 12h</p></div>
+      <a href="https://wa.me/5527" target="_blank" style="display:inline-block;margin-top:1.5rem;background:var(--forest);color:#fff;padding:.85rem 2rem;border-radius:6px;text-decoration:none;font-weight:600;font-size:.9rem;">Agendar Consulta</a>
+    </div>
+    <div class="map-box">
+      <iframe src="https://maps.google.com/maps?q=Av.+Rui+Barbosa,+601,+Centro,+Linhares,+ES&output=embed" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+<footer>
+  <p><strong>Eller Odontologia</strong> — Dr. Daniel Lucas Eller | CRO ES 8412 / EPAO 2265</p>
+  <p style="margin-top:.5rem;">Av. Rui Barbosa, 601 — Centro, Linhares, ES</p>
+</footer>
+<a href="https://wa.me/5527" target="_blank" class="wa-btn" title="Falar pelo WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.555 4.122 1.528 5.854L.057 23.667a.5.5 0 0 0 .611.612l5.815-1.471A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.9a9.867 9.867 0 0 1-5.03-1.378l-.36-.214-3.733.945.978-3.63-.234-.372A9.867 9.867 0 0 1 2.1 12C2.1 6.533 6.533 2.1 12 2.1c5.467 0 9.9 4.433 9.9 9.9 0 5.467-4.433 9.9-9.9 9.9z"/></svg>
+</a>
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+  let cur = 0;
+  function goToSlide(n) {
+    slides[cur].classList.remove('active'); dots[cur].classList.remove('active');
+    cur = n; slides[cur].classList.add('active'); dots[cur].classList.add('active');
+  }
+  setInterval(() => { goToSlide((cur + 1) % slides.length); }, 4500);
+</script>
+</body>
+</html>
